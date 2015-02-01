@@ -8,7 +8,7 @@
 
 # filename
 results_filename = "surface_flow350.dat"
-results_filename = "flow350.dat"
+#results_filename = "flow350.dat"
 
 # variables of interest (flow.dat and surface_flow.dat)
 ref1_variable = 'x'				# search along ref1
@@ -16,6 +16,7 @@ ref2_variable = 'y'				# search along ref2
 
 val1_variable = "Conservative_1"
 val2_variable = "Conservative_2"
+val2_variable = "heat_flux"
 val3_variable = "skin_friction_coefficient"	# return corresponding value
 val3_variable = "temperature"
 
@@ -31,8 +32,8 @@ ref1_min = 0
 ref1_max = 0.3
 
 # end of the coarse mesh
-ref1_min = 0.27
-ref1_max = 0.29
+#ref1_min = 0.27
+#ref1_max = 0.29
 
 #ref1_min = 1.95
 #ref1_max = 1.96
@@ -46,8 +47,9 @@ ref2_max = 4.0123e-3
 #ref2_min = 0
 #ref2_max = 0.04
 
-ref2_min = 0
-ref2_max = 5.45e-16
+# second row from the bottom of coarse mesh
+ref2_min = 1.6e-5
+ref2_max = 1.7e-5
 
 ref2_min = -1
 ref2_max = 1
@@ -56,17 +58,20 @@ ref2_max = 1
 abscissa_label = 'Re_x'
 ordinate_label = 'C_f'
 
-abscissa_label = r'\theta = \frac{T-T_w}{T_\infty-T_w}'
-ordinate_label = r'\eta'
+#abscissa_label = r'\theta = \frac{T-T_w}{T_\infty-T_w}'
+#ordinate_label = r'\eta'
 
 #abscissa_label = r'\rho, [kg/m^3]'
-#ordinate_label = r'y'
+#ordinate_label = r'\eta'
 #
 #abscissa_label = r'\frac{u}{U_\infty}'
 #ordinate_label = r'y'
 #
 #abscissa_label = r'\frac{\eta}{2}'
 #ordinate_label = r'\frac{T-T_\infty}{T_w-T_\infty}'
+
+abscissa_label = 'Re_x'
+ordinate_label = 'Nu_x'
 
 # data label
 #data_label = 'SU2 (137x97)'
@@ -101,6 +106,8 @@ x_max = 1.2
 y_min = 0
 y_max = 10
 
+# Are you computing temperature profiles parallel to the plate?
+temp_profiles = 'no'        # ('yes', 'no')
 
 # Would you like to save the figure? What should we call it?
 save_plot = 'yes'			# ('yes','no')
@@ -120,6 +127,8 @@ save_file_as = 'extracted_points.txt'
 import matplotlib.pyplot as plt
 import math
 #import numpy as np
+
+plt.close("all")
 
 # plot the SU^2 results
 
@@ -227,7 +236,7 @@ for line in results_file:
 print "number of values recorded = ", val_counter  
 
   
-
+###############################################################################
 def two_col_read(filename, header_rows):
   """
   This function reads two columns of data from a file, ignores the header, 
@@ -249,6 +258,7 @@ def two_col_read(filename, header_rows):
     line_counter += 1
   return (x,y)
   
+###############################################################################
 def pohlhausen_profile(Pr):
     """
     Given the Prandtl number of the flat-plate flow, this function returns the
@@ -258,10 +268,11 @@ def pohlhausen_profile(Pr):
     Input: Pr
     Output: theta and eta as lists
     """
-
+    
     from scipy.integrate import simps
     
     # eta and Blasius solution values from Rochester lecture notes
+    # (N.B. The values given in White are different, possibly wrong)
     eta = [0 , 0.25, 0.50, 0.75, 1.00,
                1.25, 1.50, 1.75, 2.00,
                2.25, 2.50, 2.75, 3.00,
@@ -297,7 +308,7 @@ def pohlhausen_profile(Pr):
                       0.0104, 0.0066, 0.0040, 0.0024,
                       0.0014, 0.0008, 0.0004, 0.0002,
                       0.0001, 0.0001, 0.0000, 0.0000]
-
+    
     # take the integrals given in the MIT lecture notes
     N_values = len(eta)
     theta = [float('nan') for x in range(N_values)]
@@ -327,12 +338,15 @@ rho_inf = 1.13753			# freestream density, [kg/m^3]
 #rho_inf = 2.27506
 cp = 1005				# specific heat capacity, [J/kg.K]
 Pr = 0.72				# Prandtl number
+k = 0.02618                 # thermal conductivity, [W/m.K]
+
 
 # Let T_inf be defined by the temperature found at the of the outlet boundary
 # (N.B. This assumes that values3 = temperatures along the outlet, starting 
 #  from the top fo the mesh and going down)
-T_inf = values3[0]
-
+if temp_profiles == 'yes':
+    T_inf = values3[0]
+    
 # derived quantities
 #U_inf = Ma_inf*a		
 r = pow(Pr,1/2)			# recovery factor, laminar flow
@@ -348,6 +362,8 @@ eta = []
 nondim_T_CB = []
 nondim_T2 = []
 eta_over_2 = []
+Nu_x_Blasius = []
+Nu_x = []
 
 # renaming reported quantities
 for value in range(val_counter):
@@ -363,17 +379,23 @@ for value in range(val_counter):
 
   # rename the values
   T = values3[value]
+  q_w = values2[value]        # heat flux at the wall
   #rho = values2[value]
   #rhou = values3[value]
   #u = rhou/rho
   #u_over_U.append(u/U_inf)
-
+  
+  
   # perform computations
 
   # crocco-busemann relation (laminar, compressible bounardary layers)
   T_CB = T_w + (T_aw-T_w)*(u/(U_inf)) - r*pow(u,2)/(2*cp)
   nondim_T_CB.append((T_CB - T_w)/(T_inf - T_w)) 
   
+  # local Nusselt number from simulation  
+  Nu_x.append(-q_w*x/(k*(T_w-T_inf)))
+  
+  # local Reynolds number
   nu = mu/rho
   nu = mu/rho_inf
   Re_x.append(U_inf*x/nu)
@@ -385,7 +407,9 @@ for value in range(val_counter):
   
   nondim_T2.append((T-T_inf)/(T_w-T_inf))
   eta_over_2.append((y/2)/math.sqrt(nu*x/U_inf))
-
+  
+  Nu_x_Blasius.append(0.332*pow(Re_x[value],0.5)*pow(Pr,float(1.0/3.0)))
+  
 # set the values that are to be plotted
 abscissas = u_over_U 
 ordinates = reference2
@@ -393,18 +417,20 @@ ordinates = reference2
 abscissas = Re_x
 ordinates = values3
 
-abscissas = nondim_T
-ordinates = eta
+#abscissas = nondim_T
+#ordinates = eta
 
 #x = reference1
 #y = reference2
 #rho = values1
 #abscissas = rho
-#ordinates = y
+#ordinates = eta
 
 #abscissas = eta_over_2
 #ordinates = nondim_T2
 
+abscissas = Re_x
+ordinates = Nu_x
 
 ###############################################################################
 ###############################################################################
@@ -413,7 +439,7 @@ ordinates = eta
 #x_fun3d, Cf_fun3d = two_col_read("fun3d.dat",2)
 #u_cfl3d_097, y_cfl3d_097 = two_col_read("y_vs_u_cfl3d_0.970.dat",2)
 #u_cfl3d_190, y_cfl3d_190 = two_col_read("y_vs_u_cfl3d_1.903.dat",2) 
-eta_Pohl, nondim_T_Pohl = pohlhausen_profile(Pr)
+#eta_Pohl, nondim_T_Pohl = pohlhausen_profile(Pr)
 
 # plot your additional data sets or altered values as you like
 
@@ -425,15 +451,18 @@ eta_Pohl, nondim_T_Pohl = pohlhausen_profile(Pr)
 #plt.plot(u_cfl3d_097,y_cfl3d_097,'b-',label="CFL3D")
 #plt.plot(u_cfl3d_190,y_cfl3d_190,'b-',label="CFL3D")
 
-# the blasius solution
-#plt.plot(abscissas, Cf_Blasius,'b-',label="Blasius")
+# the blasius solution for skin friction
+#plt.plot(abscissas, Cf_Blasius, 'b-', label="Blasius")
+
+# the blasius solution for local Nusselt number
+plt.plot(abscissas, Nu_x_Blasius, 'b-', label="Blasius")
 
 # plot the pohlhausen solution
-plt.plot(nondim_T_Pohl, eta_Pohl,'r-',label="Pohlhausen")
+#plt.plot(nondim_T_Pohl, eta_Pohl,'r-',label="Pohlhausen")
 
 # plot crocco-busemann profile
-plt.hold()
-plt.plot(nondim_T_CB, eta,'b-',label="Crocco-Busemann")
+#plt.hold()
+#plt.plot(nondim_T_CB, eta,'b-',label="Crocco-Busemann")
 
 
 
