@@ -8,7 +8,7 @@
 
 # filename
 results_filename = "surface_flow350.dat"
-#results_filename = "flow350.dat"
+results_filename = "flow350.dat"
 
 # variables of interest (flow.dat and surface_flow.dat)
 ref1_variable = 'x'				# search along ref1
@@ -16,7 +16,8 @@ ref2_variable = 'y'				# search along ref2
 
 val1_variable = "Conservative_1"
 val2_variable = "Conservative_2"
-val2_variable = "heat_flux"
+
+val3_variable = "heat_flux"
 val3_variable = "skin_friction_coefficient"	# return corresponding value
 val3_variable = "temperature"
 
@@ -32,8 +33,8 @@ ref1_min = 0
 ref1_max = 0.3
 
 # end of the coarse mesh
-#ref1_min = 0.27
-#ref1_max = 0.29
+ref1_min = 0.27
+ref1_max = 0.29
 
 #ref1_min = 1.95
 #ref1_max = 1.96
@@ -58,8 +59,8 @@ ref2_max = 1
 abscissa_label = 'Re_x'
 ordinate_label = 'C_f'
 
-#abscissa_label = r'\theta = \frac{T-T_w}{T_\infty-T_w}'
-#ordinate_label = r'\eta'
+abscissa_label = r'\theta = \frac{T-T_w}{T_\infty-T_w}'
+ordinate_label = r'\eta'
 
 #abscissa_label = r'\rho, [kg/m^3]'
 #ordinate_label = r'\eta'
@@ -70,8 +71,8 @@ ordinate_label = 'C_f'
 #abscissa_label = r'\frac{\eta}{2}'
 #ordinate_label = r'\frac{T-T_\infty}{T_w-T_\infty}'
 
-abscissa_label = 'Re_x'
-ordinate_label = 'Nu_x'
+#abscissa_label = 'Re_x'
+#ordinate_label = 'Nu_x'
 
 # data label
 #data_label = 'SU2 (137x97)'
@@ -92,22 +93,12 @@ title = ''
 custom_axes = 'no'			# ('yes','no')
 
 x_min = 0
-x_max = 2
-y_min = 0.002
-y_max = 0.006
-
-x_min = 0
-x_max = 1
-y_min = 0
-y_max = 0.04
-
-x_min = 0
 x_max = 1.2
 y_min = 0
 y_max = 10
 
 # Are you computing temperature profiles parallel to the plate?
-temp_profiles = 'no'        # ('yes', 'no')
+temp_profiles = 'yes'        # ('yes', 'no')
 
 # Would you like to save the figure? What should we call it?
 save_plot = 'yes'			# ('yes','no')
@@ -350,7 +341,7 @@ if temp_profiles == 'yes':
 # derived quantities
 #U_inf = Ma_inf*a		
 r = pow(Pr,1/2)			# recovery factor, laminar flow
-r = 0.84771                 # white, pg. 515
+#r = 0.84771                 # white, pg. 515
 T_aw = T_inf + r*pow(U_inf,2)/(2*cp)	# adibatic-wall temperature, [K]
 
 # variable declaration
@@ -379,7 +370,7 @@ for value in range(val_counter):
 
   # rename the values
   T = values3[value]
-  q_w = values2[value]        # heat flux at the wall
+  q_w = values3[value]        # heat flux at the wall
   #rho = values2[value]
   #rhou = values3[value]
   #u = rhou/rho
@@ -389,6 +380,8 @@ for value in range(val_counter):
   # perform computations
 
   # crocco-busemann relation (laminar, compressible bounardary layers)
+  # N.B. For this to work properly, you need to be computing u 
+  # Need: rho=values1, and rhou = value2 
   T_CB = T_w + (T_aw-T_w)*(u/(U_inf)) - r*pow(u,2)/(2*cp)
   nondim_T_CB.append((T_CB - T_w)/(T_inf - T_w)) 
   
@@ -408,6 +401,8 @@ for value in range(val_counter):
   nondim_T2.append((T-T_inf)/(T_w-T_inf))
   eta_over_2.append((y/2)/math.sqrt(nu*x/U_inf))
   
+  eta_Pohl, nondim_T_Pohl = pohlhausen_profile(Pr)
+  
   Nu_x_Blasius.append(0.332*pow(Re_x[value],0.5)*pow(Pr,float(1.0/3.0)))
   
 # set the values that are to be plotted
@@ -417,8 +412,8 @@ ordinates = reference2
 abscissas = Re_x
 ordinates = values3
 
-#abscissas = nondim_T
-#ordinates = eta
+abscissas = nondim_T
+ordinates = eta
 
 #x = reference1
 #y = reference2
@@ -429,8 +424,8 @@ ordinates = values3
 #abscissas = eta_over_2
 #ordinates = nondim_T2
 
-abscissas = Re_x
-ordinates = Nu_x
+#abscissas = Re_x
+#ordinates = Nu_x
 
 ###############################################################################
 ###############################################################################
@@ -439,7 +434,7 @@ ordinates = Nu_x
 #x_fun3d, Cf_fun3d = two_col_read("fun3d.dat",2)
 #u_cfl3d_097, y_cfl3d_097 = two_col_read("y_vs_u_cfl3d_0.970.dat",2)
 #u_cfl3d_190, y_cfl3d_190 = two_col_read("y_vs_u_cfl3d_1.903.dat",2) 
-#eta_Pohl, nondim_T_Pohl = pohlhausen_profile(Pr)
+
 
 # plot your additional data sets or altered values as you like
 
@@ -455,14 +450,14 @@ ordinates = Nu_x
 #plt.plot(abscissas, Cf_Blasius, 'b-', label="Blasius")
 
 # the blasius solution for local Nusselt number
-plt.plot(abscissas, Nu_x_Blasius, 'b-', label="Blasius")
+#plt.plot(abscissas, Nu_x_Blasius, 'b-', label="Blasius")
 
 # plot the pohlhausen solution
-#plt.plot(nondim_T_Pohl, eta_Pohl,'r-',label="Pohlhausen")
+plt.plot(nondim_T_Pohl, eta_Pohl,'r-',label="Pohlhausen")
 
 # plot crocco-busemann profile
-#plt.hold()
-#plt.plot(nondim_T_CB, eta,'b-',label="Crocco-Busemann")
+plt.hold(True)
+plt.plot(nondim_T_CB, eta,'b-',label="Crocco-Busemann")
 
 
 
