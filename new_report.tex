@@ -18,9 +18,10 @@
   %per-mode=fraction
   per-mode=symbol
 }
-% to hyperlink figure and equation numbers in a pdf
+% to hyperlink figure and equation numbers in a pdf correctly
 \usepackage[colorlinks=false, pdfborder={0 0 0}]{hyperref}
-\usepackage{bigints}
+\usepackage[all]{hypcap}
+% to make math larger and smaller
 \usepackage{relsize}
 \begin{document}
 
@@ -32,14 +33,14 @@
 \maketitle
 
 \begin{abstract}
-Several simulations of flat-plate flow were performed using SU2 at NASA Glenn from June to July of 2014. Here, one specific case has been investigated again, namely: laminar flow over a flat plate with an isothermal wall boundary condition. The temperature difference between the freestream and the surface is relatively small compared to the previous simulations. Moreover, a low freestream Mach number has been chosen in an attempt to minimize the effects of compressibility. Various quantities of interest from this new simulation have been plotted. When appropriate, computational results are compared with analytical solutions. The purpose of this report is to assist work on thermal boundary layers that is currently ongoing at NASA Glenn.
+Several simulations of flat-plate flow were performed using SU2 at NASA Glenn from June to July of 2014. Here, one specific case has been investigated again, namely: laminar flow over a flat plate with an isothermal wall boundary condition. The temperature difference between the freestream and the surface is relatively small when compared to that of the previous simulation. Moreover, a low freestream Mach number has been chosen in an attempt to minimize the effects of compressibility. Various quantities of interest from this new simulation have been plotted. Where appropriate, computational results have been compared with analytical solutions. The purpose of this report is to assist work on thermal boundary layers that is currently ongoing at NASA Glenn.
 \end{abstract}
 
 \section*{Preliminaries}
-The physical flow parameters of this simulation as well as the numerical methods used have been described below.
+The physical flow parameters of this simulation, as well as the numerical methods used, are described below.
 
 \subsection*{Flow Conditions}
-The case run simulates the laminar flow of air ($\gamma$ = 1.4) over a flat plate held at a constant temperature, $T_w$. Specific conditions of the flow are listed below.
+This case simulates the laminar flow of air ($\gamma$ = 1.4) over a flat plate held at a constant temperature, $T_w$. Specific conditions of the flow are listed below.
 
 \begin{align*}
 &c_p = \SI{1005}{\joule\per\kilogram\kelvin} & \text{specific heat capacity} \\
@@ -55,7 +56,7 @@ The case run simulates the laminar flow of air ($\gamma$ = 1.4) over a flat plat
 &\rho_\infty = \SI{1.13753}{\kilogram\per\meter\cubed} & \text{freestream density}
 \end{align*}
 
-N.B. The static pressure at the outlet, $p_{out}$, was computed using the isentropic relation
+N.B. The static pressure at the outlet, $p_{out}$, was computed using the isentropic relation, viz.
 
 \begin{equation*}
 p_{out} = p_{t_{in}}\left[ 1+\dfrac{1}{2}\left( \gamma-1\right) M_\infty^2 \right] ^{-\dfrac{\gamma}{\left( \gamma-1\right) }}.
@@ -75,7 +76,7 @@ The Navier-Stokes equations without a turbulence model were used to model lamina
 \end{description}
 
 \section*{Results}
-Some salient results from the simulation done in SU2 are presented here. This includes evidence of numerical convergence as well as extracted profiles of skin friction, temperature, and Nusselt number.
+Some salient results from the simulation done in SU2 are presented here. This includes evidence of numerical convergence as well as extracted profiles of skin friction, temperature, heat transfer, and density.
 
 \subsection*{Numerical Convergence}
 The problem was considered to be converged after seeing the residual in density fall five orders of magnitude. A plot of the residual history is found in Fig.~\ref{fig:rho_res}.
@@ -83,7 +84,7 @@ The problem was considered to be converged after seeing the residual in density 
 \begin{figure}[h] 
 \centering
 \includegraphics[width=\linewidth]{rho_residual.png}
-\caption{Convergence history of the density residual, $R(\rho)$.}
+\caption{The convergence history of the density residual, $R_\rho$.}
 \label{fig:rho_res}
 \end{figure}
 
@@ -91,20 +92,20 @@ The problem was considered to be converged after seeing the residual in density 
 Fig.~\ref{fig:cf} compares the coefficient of skin friction, $C_f$, calculated by SU2 with that of the analytical solution by Blasius:
 
 \begin{equation*}
-C_f(x) = \dfrac{0.6641}{\sqrt{Re_x}}.
+C_f(x) = \dfrac{0.6641}{\sqrt{Re_x}},
 \end{equation*}
 
-Checking the skin friction coefficient is generally a good way of assessing the quality of a laminar, flat-plate simulation.
+where $Re_x = \tfrac{U_\infty x}{\nu}$ is the local Reynolds number. Checking the skin friction coefficient is generally a good way of assessing the quality of a laminar, flat-plate simulation.
 
 \begin{figure}[h] 
 \centering
 \includegraphics[width=\linewidth]{cf_350.png}
-\caption{Variation in $C_f$ along the length of the plate.}
+\caption{Variation in $C_f$ along the length of the plate plotted as a function of local $Re$.}
 \label{fig:cf}
 \end{figure}
 
 \subsection*{Thermal Boundary Layer}
-The isothermal wall condition allows one to investigate the development and growth of thermal boundary layers along the surface of the plate. In Fig.~\ref{fig:temp}, nondimensionalized temperature along the outlet boundary (i.e. at the end of the plate), 
+The isothermal wall condition allows one to investigate the development and growth of a thermal boundary layer along the surface of the plate. In Fig.~\ref{fig:temp}, nondimensionalized temperature, 
 
 \begin{equation*}
 \theta = \dfrac{T-T_w}{T_\infty-T_w},
@@ -116,19 +117,70 @@ has been plotted against nondimensionalized wall distance,
 \eta = \dfrac{y}{\sqrt{\dfrac{\nu x}{U_\infty}}},
 \end{equation*}
 
-where $\nu = \mu/\rho$ denotes the kinematic viscosity.
+where $\nu = \mu/\rho$ denotes the kinematic viscosity. In Fig.~\ref{fig:temp}, the cross-section has been taken along the outlet boundary --- i.e. at the end of the plate.
 
-The temperature profile extracted from the SU2 output is also compared against the analytical solution of Pohlhausen as well as the Crocco-Busemann relation, which is designed to account for the effects of compressibility. Pohlhausen's solution is given by
+The temperature profile extracted from the SU2 output is compared against the analytical solution of Pohlhausen as well as the Crocco-Busemann relation, which is designed to account for the effects of compressibility. Pohlhausen's solution is given by
 
 \begin{equation*}
-\theta_{Pohlhasusen} = 1 - \dfrac{\mathlarger{\mathlarger{\int_{\eta}^{\infty}}}\left( \dfrac{d^2f}{d\eta^2}\right)^{Pr}d\eta}{\mathlarger{\mathlarger{\int_{0}^{\infty}}}\left( \dfrac{d^2f}{d\eta^2}\right)^{Pr}d\eta}
+\theta_{Pohlhasusen} = 1 - \dfrac{\mathlarger{\int_{\eta}^{\infty}}\mathsmaller{\left( \dfrac{d^2f}{d\eta^2}\right)}^{Pr}d\eta}{\mathlarger{\int_{0}^{\infty}}\mathsmaller{\left( \dfrac{d^2f}{d\eta^2}\right)}^{Pr}d\eta},
+\end{equation*}
+
+where $f$ is the well-known solution to the Blasius equation. The Crocco-Busemann relation is given in terms of temperature at a given point in the domain, namely:
+
+\begin{equation*}
+T_{CB} = T_w + \left( T_{aw}-T_w \right)\frac{u}{U_\infty} - \dfrac{ru^2}{2c_p}.
+\end{equation*}
+
+Here, $u$ is the local velocity in the $x$ direction, $r$ is the so-called ``recovery factor" given by $r = \sqrt{Pr}$, and $T_{aw}$ denotes the \textit{adiabatic wall temperature}, defined as
+
+\begin{equation*}
+T_{aw} = T_\infty + \dfrac{rU_\infty^2}{2c_p}.
+\end{equation*}
+
+In Fig.~\ref{fig:temp}, the temperature given by the Crocco-Busemann model, $T_{CB}$, has been nondimensionalized as follows:
+
+\begin{equation*}
+\theta_{CB} = \dfrac{T_{CB}-T_w}{T_\infty-T_w},
 \end{equation*}
 
 \begin{figure}[h] 
 \centering
 \includegraphics[width=\linewidth]{temp_350.png}
-\caption{Nondimensionalized temperature profile at the outlet.}
+\caption{Nondimensionalized temperature profiles at the outlet.}
 \label{fig:temp}
 \end{figure}
+
+\subsection*{Nusselt Number}
+The rate of heat transfer along the surface of the plate, $q_w$, was calculated by SU2 and used to compute a distribution of local Nusselt number,
+
+\begin{equation*}
+Nu_x = -\dfrac{q_wx}{k\left(T_w-T_\infty\right)}.
+\end{equation*} 
+
+Fig.~\ref{fig:Nu} compares the result from simulation with the analytical solution of Blasius, viz.
+
+\begin{equation*}
+Nu_{x_{Blasius}} = 0.332\sqrt{Re_x}Pr^{1/3}.
+\end{equation*} 
+
+\begin{figure}[h] 
+\centering
+\includegraphics[width=\linewidth]{Nu_350.png}
+\caption{Local Nusselt number plotted along the length of the plate.}
+\label{fig:Nu}
+\end{figure}
+
+\subsection*{Density Variations}
+Naturally, when using a compressible solver, changes in temperature will lead to changes in density. Lest comparisons to the incompressible Blasius solutions be suspect, Fig.~\ref{fig:rho} shows how the flow density varies through the boundary layer at the trailing edge of the plate. Whether or not this change in density is too large for a comparison to be made between this simulation and the Blasius solutions is a matter of the analyst's discretion.
+
+\begin{figure}[h] 
+\centering
+\includegraphics[width=\linewidth]{rho_profile.png}
+\caption{Density profile observed at the mesh outlet.}
+\label{fig:rho}
+\end{figure}
+
+\section*{Summary}
+Some of the salient results from an isothemeral, laminar, flat-plate simulation have been presented. When deemed appropriate, CFD results from SU2 have been compared again the analytical solutions of Blasius, Pohlhausen, and Crocco-Busemann. On balance, it appears that prescribing a small temperature difference, $T_w-T_\infty$, as well as a low inlet Mach number allows the output from a compressible solver to be reasonably compared with incompressible analytical results. This appears to be the case for both aerodynamics as well as heat transfer.
 
 \end{document}

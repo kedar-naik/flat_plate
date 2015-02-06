@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2014.12.25)  2 FEB 2015 05:19
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2014.12.25)  5 FEB 2015 17:14
 entering extended mode
 **new_report.tex
 (C:\Users\Kedar\Desktop\flat_plate\new_report.tex
@@ -790,28 +790,27 @@ Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 2
 )
 \Hy@SectionHShift=\skip58
 )
-("C:\Program Files\MiKTeX 2.9\tex\latex\bigints\bigints.sty"
-Package: bigints 2010/02/15 Writing big integrals
-Package bigints Info: This is Bigints by Merciadri Luca. on input line 5.
+("C:\Program Files\MiKTeX 2.9\tex\latex\oberdiek\hypcap.sty"
+Package: hypcap 2011/02/16 v1.11 Adjusting the anchors of captions (HO)
 )
 ("C:\Program Files\MiKTeX 2.9\tex\latex\ltxmisc\relsize.sty"
 Package: relsize 2003/07/04 ver 3.1
 )
 (C:\Users\Kedar\Desktop\flat_plate\new_report.aux)
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 25.
-LaTeX Font Info:    ... okay on input line 25.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 25.
-LaTeX Font Info:    ... okay on input line 25.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 25.
-LaTeX Font Info:    ... okay on input line 25.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 25.
-LaTeX Font Info:    ... okay on input line 25.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 25.
-LaTeX Font Info:    ... okay on input line 25.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 25.
-LaTeX Font Info:    ... okay on input line 25.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 25.
-LaTeX Font Info:    ... okay on input line 25.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 26.
+LaTeX Font Info:    ... okay on input line 26.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 26.
+LaTeX Font Info:    ... okay on input line 26.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 26.
+LaTeX Font Info:    ... okay on input line 26.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 26.
+LaTeX Font Info:    ... okay on input line 26.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 26.
+LaTeX Font Info:    ... okay on input line 26.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 26.
+LaTeX Font Info:    ... okay on input line 26.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 26.
+LaTeX Font Info:    ... okay on input line 26.
 
 ("C:\Program Files\MiKTeX 2.9\tex\context\base\supp-pdf.mkii"
 [Loading MPS to PDF converter (version 2006.09.02).]
@@ -910,7 +909,7 @@ g"
 File: siunitx-abbreviations.cfg 2013/07/31 v2.5s siunitx: Abbreviated units
 )
 \AtBeginShipoutBox=\box51
-Package hyperref Info: Link coloring OFF on input line 25.
+Package hyperref Info: Link coloring OFF on input line 26.
  ("C:\Program Files\MiKTeX 2.9\tex\latex\hyperref\nameref.sty"
 Package: nameref 2012/10/27 v2.43 Cross-referencing by name of section
 
@@ -919,20 +918,20 @@ Package: gettitlestring 2010/12/03 v1.4 Cleanup title references (HO)
 )
 \c@section@level=\count163
 )
-LaTeX Info: Redefining \ref on input line 25.
-LaTeX Info: Redefining \pageref on input line 25.
-LaTeX Info: Redefining \nameref on input line 25.
+LaTeX Info: Redefining \ref on input line 26.
+LaTeX Info: Redefining \pageref on input line 26.
+LaTeX Info: Redefining \nameref on input line 26.
 
 (C:\Users\Kedar\Desktop\flat_plate\new_report.out)
 (C:\Users\Kedar\Desktop\flat_plate\new_report.out)
 \@outlinefile=\write3
 \c__siunitx_mathsf_int=\count164
-LaTeX Font Info:    Try loading font information for U+msa on input line 25.
+LaTeX Font Info:    Try loading font information for U+msa on input line 26.
 
 ("C:\Program Files\MiKTeX 2.9\tex\latex\amsfonts\umsa.fd"
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 25.
+LaTeX Font Info:    Try loading font information for U+msb on input line 26.
 
 ("C:\Program Files\MiKTeX 2.9\tex\latex\amsfonts\umsb.fd"
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
@@ -944,7 +943,7 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 <rho_residual.png, id=29, 578.16pt x 431.4519pt>
 File: rho_residual.png Graphic file (type png)
  <use rho_residual.png>
-Package pdftex.def Info: rho_residual.png used on input line 85.
+Package pdftex.def Info: rho_residual.png used on input line 86.
 (pdftex.def)             Requested size: 390.0pt x 291.03313pt.
 
 
@@ -953,59 +952,84 @@ LaTeX Warning: `h' float specifier changed to `ht'.
 <cf_350.png, id=32, 578.16pt x 431.4519pt>
 File: cf_350.png Graphic file (type png)
  <use cf_350.png>
-Package pdftex.def Info: cf_350.png used on input line 101.
+Package pdftex.def Info: cf_350.png used on input line 102.
 (pdftex.def)             Requested size: 390.0pt x 291.03313pt.
 
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
 [3] [4 <C:/Users/Kedar/Desktop/flat_plate/rho_residual.png>]
-Overfull \hbox (31.80766pt too wide) in paragraph at lines 121--122
-\OT1/cmr/m/n/12 re-la-tion, which is de-signed to ac-count for the ef-fects of 
-com-press-ibil-ity. Pohlhausen's
+Overfull \hbox (12.8773pt too wide) in paragraph at lines 122--123
+\OT1/cmr/m/n/12 tion, which is de-signed to ac-count for the ef-fects of com-pr
+ess-ibil-ity. Pohlhausen's
  []
 
 [5 <C:/Users/Kedar/Desktop/flat_plate/cf_350.png>]
-<temp_350.png, id=55, 578.16pt x 431.4519pt>
+<temp_350.png, id=59, 578.16pt x 431.4519pt>
 File: temp_350.png Graphic file (type png)
  <use temp_350.png>
-Package pdftex.def Info: temp_350.png used on input line 129.
+Package pdftex.def Info: temp_350.png used on input line 148.
 (pdftex.def)             Requested size: 390.0pt x 291.03313pt.
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 134.
- [6 <C:/Users/Kedar/Desktop/flat_plate/temp_350.png>]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 134.
 
-(C:\Users\Kedar\Desktop\flat_plate\new_report.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 134.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 134.
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+<Nu_350.png, id=61, 578.16pt x 431.4519pt>
+File: Nu_350.png Graphic file (type png)
+ <use Nu_350.png>
+Package pdftex.def Info: Nu_350.png used on input line 168.
+(pdftex.def)             Requested size: 390.0pt x 291.03313pt.
+
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+[6] <rho_profile.png, id=70, 578.16pt x 431.4519pt>
+File: rho_profile.png Graphic file (type png)
+ <use rho_profile.png>
+Package pdftex.def Info: rho_profile.png used on input line 178.
+(pdftex.def)             Requested size: 390.0pt x 291.03313pt.
+
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+[7 <C:/Users/Kedar/Desktop/flat_plate/temp_350.png>]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 186.
+ [8 <C:/Users/Kedar/Desktop/flat_plate/Nu_350.png>] [9 <C:/Users/Kedar/Desktop/
+flat_plate/rho_profile.png>]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 186.
+ (C:\Users\Kedar\Desktop\flat_plate\new_report.aux)
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 186.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 186.
 Package rerunfilecheck Info: File `new_report.out' has not changed.
 (rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 134.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 186.
  ) 
 Here is how much of TeX's memory you used:
- 14174 strings out of 493737
- 275602 string characters out of 3145051
- 313795 words of memory out of 3000000
- 17326 multiletter control sequences out of 15000+200000
- 18675 words of font info for 74 fonts, out of 3000000 for 9000
+ 14152 strings out of 493737
+ 274986 string characters out of 3145051
+ 312263 words of memory out of 3000000
+ 17295 multiletter control sequences out of 15000+200000
+ 17300 words of font info for 68 fonts, out of 3000000 for 9000
  1025 hyphenation exceptions out of 8191
  34i,19n,35p,10387b,868s stack positions out of 5000i,500n,10000p,200000b,50000s
 <C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx10.pfb><C:/Pr
 ogram Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Program Fi
 les/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmex10.pfb><C:/Program Files/MiKT
-eX 2.9/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Program Files/MiKTeX 2.9/f
-onts/type1/public/amsfonts/cm/cmmi12.pfb><C:/Program Files/MiKTeX 2.9/fonts/typ
-e1/public/amsfonts/cm/cmmi6.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public
-/amsfonts/cm/cmmi8.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts
-/cm/cmr10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr12
-.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr17.pfb><C:/
-Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr8.pfb><C:/Program Fi
-les/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Program Files/MiKT
-eX 2.9/fonts/type1/public/amsfonts/cm/cmsy8.pfb><C:/Program Files/MiKTeX 2.9/fo
-nts/type1/public/amsfonts/cm/cmtt12.pfb>
-Output written on new_report.pdf (6 pages, 232595 bytes).
+eX 2.9/fonts/type1/public/amsfonts/cmextra/cmex8.pfb><C:/Program Files/MiKTeX 2
+.9/fonts/type1/public/amsfonts/cm/cmmi12.pfb><C:/Program Files/MiKTeX 2.9/fonts
+/type1/public/amsfonts/cm/cmmi6.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/pu
+blic/amsfonts/cm/cmmi8.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsf
+onts/cm/cmr10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/c
+mr12.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr17.pfb>
+<C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr8.pfb><C:/Progra
+m Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Program Files/
+MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy6.pfb><C:/Program Files/MiKTeX 2.
+9/fonts/type1/public/amsfonts/cm/cmsy8.pfb><C:/Program Files/MiKTeX 2.9/fonts/t
+ype1/public/amsfonts/cm/cmti12.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/pub
+lic/amsfonts/cm/cmtt12.pfb>
+Output written on new_report.pdf (9 pages, 315476 bytes).
 PDF statistics:
- 110 PDF objects out of 1000 (max. 8388607)
- 17 named destinations out of 1000 (max. 500000)
- 16 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 147 PDF objects out of 1000 (max. 8388607)
+ 25 named destinations out of 1000 (max. 500000)
+ 26 words of extra memory for PDF output out of 10000 (max. 10000000)
 
