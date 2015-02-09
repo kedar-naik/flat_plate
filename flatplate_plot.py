@@ -8,18 +8,21 @@
 
 # filename
 results_filename = "surface_flow350.dat"
-results_filename = "flow350.dat"
+#results_filename = "surface_flow_303.dat"
+#results_filename = "flow350.dat"
+#results_filename = "flow_303.dat"
 
 # variables of interest (flow.dat and surface_flow.dat)
 ref1_variable = 'x'				# search along ref1
 ref2_variable = 'y'				# search along ref2
 
+# return corresponding value
 val1_variable = "Conservative_1"
 val2_variable = "Conservative_2"
 
 val3_variable = "heat_flux"
-val3_variable = "skin_friction_coefficient"	# return corresponding value
-val3_variable = "temperature"
+#val3_variable = "skin_friction_coefficient"	
+#val3_variable = "temperature"
 
 # reference1 bounds
 ref1_min = 0.97000
@@ -33,8 +36,8 @@ ref1_min = 0
 ref1_max = 0.3
 
 # end of the coarse mesh
-ref1_min = 0.27
-ref1_max = 0.29
+#ref1_min = 0.27
+#ref1_max = 0.29
 
 #ref1_min = 1.95
 #ref1_max = 1.96
@@ -59,25 +62,22 @@ ref2_max = 1
 abscissa_label = 'Re_x'
 ordinate_label = 'C_f'
 
-abscissa_label = r'\theta = \frac{T-T_w}{T_\infty-T_w}'
-ordinate_label = r'\eta'
-
-#abscissa_label = r'\rho, [kg/m^3]'
+#abscissa_label = r'\theta = \frac{T-T_w}{T_\infty-T_w}'
 #ordinate_label = r'\eta'
 #
+#abscissa_label = r'1-\frac{\rho}{\rho_\infty}'
+#ordinate_label = r'\eta'
+
 #abscissa_label = r'\frac{u}{U_\infty}'
 #ordinate_label = r'y'
-#
-#abscissa_label = r'\frac{\eta}{2}'
-#ordinate_label = r'\frac{T-T_\infty}{T_w-T_\infty}'
 
-#abscissa_label = 'Re_x'
-#ordinate_label = 'Nu_x'
+abscissa_label = 'Re_x'
+ordinate_label = 'Nu_x'
 
 # data label
 #data_label = 'SU2 (137x97)'
 data_label = 'SU2 (65x65)'
-#data_label = 'SU2'
+data_label = r'SU2 ($T_w$ = 350 K)'
 
 # title
 #title = 'flat plate, turbulent, SA, coarse mesh: 137x97'
@@ -92,13 +92,30 @@ title = ''
 # plotting axes
 custom_axes = 'no'			# ('yes','no')
 
-x_min = 0
-x_max = 1.2
+x_min = -0.02   # for density profiles
+x_max = 0.16
 y_min = 0
-y_max = 10
+y_max = 8
+
+#x_min = 0       # for temp profiles
+#x_max = 1.2
+#y_min = 0
+#y_max = 8
+
+# Are there points in a two-column file that you wish to plot too?
+points_from_file = 'yes'            # ('yes', 'no')
+
+points_filename = 'nu_303.txt'
+header_lines = 1
+points_label = r'SU2 ($T_w$ = 303 K)'
+points_marker = 'b.-'
 
 # Are you computing temperature profiles parallel to the plate?
-temp_profiles = 'yes'        # ('yes', 'no')
+temp_profiles = 'no'           # ('yes', 'no')
+T_w = 350			        # isothermal wall temperature, [K]
+
+# Are you computing density profiles parallel to the plate?
+density_profiles = 'no'        # ('yes', 'no')
 
 # Would you like to save the figure? What should we call it?
 save_plot = 'yes'			# ('yes','no')
@@ -324,19 +341,26 @@ mu = 1.84492e-5				# dynamic viscosity, [N.s/m^2]
 U_inf = 69.5429				# freestream velocity, [m/s]
 U_inf = 34.7715
 T_inf = 300				# freestream temperature, [K]
-T_w = 350				# wall temperature, [K]
 rho_inf = 1.13753			# freestream density, [kg/m^3]
 #rho_inf = 2.27506
 cp = 1005				# specific heat capacity, [J/kg.K]
 Pr = 0.72				# Prandtl number
 k = 0.02618                 # thermal conductivity, [W/m.K]
 
+# gotten from top-right corner of volume flow
+rho_inf = 1.15419   # T_w = 350
+rho_inf = 1.155    # [kg/m^3]T_w = 303
+#T_inf = 299.4012    # [K] T_w = 303 and T_w = 350
 
 # Let T_inf be defined by the temperature found at the of the outlet boundary
 # (N.B. This assumes that values3 = temperatures along the outlet, starting 
 #  from the top fo the mesh and going down)
 if temp_profiles == 'yes':
     T_inf = values3[0]
+
+# similarly for density
+if density_profiles == 'yes':
+    rho_inf = values1[0]
     
 # derived quantities
 #U_inf = Ma_inf*a		
@@ -409,59 +433,65 @@ for value in range(val_counter):
 abscissas = u_over_U 
 ordinates = reference2
 
+# for skin friction
 abscissas = Re_x
 ordinates = values3
 
-abscissas = nondim_T
-ordinates = eta
-
+#abscissas = nondim_T
+#ordinates = eta
+#
 #x = reference1
 #y = reference2
 #rho = values1
-#abscissas = rho
+#one_minus_nondim_rho = [1-(entry/rho_inf) for entry in rho]
+#abscissas = one_minus_nondim_rho
 #ordinates = eta
 
 #abscissas = eta_over_2
 #ordinates = nondim_T2
 
-#abscissas = Re_x
-#ordinates = Nu_x
+abscissas = Re_x
+ordinates = Nu_x
 
 ###############################################################################
 ###############################################################################
 # add more data sets
-#x_cfl3d, Cf_cfl3d = two_col_read("cfl3d.dat",2)
-#x_fun3d, Cf_fun3d = two_col_read("fun3d.dat",2)
-#u_cfl3d_097, y_cfl3d_097 = two_col_read("y_vs_u_cfl3d_0.970.dat",2)
-#u_cfl3d_190, y_cfl3d_190 = two_col_read("y_vs_u_cfl3d_1.903.dat",2) 
-
-
 # plot your additional data sets or altered values as you like
 
 # skin friction
+#x_cfl3d, Cf_cfl3d = two_col_read("cfl3d.dat",2)
+#x_fun3d, Cf_fun3d = two_col_read("fun3d.dat",2)
 #plt.plot(x_cfl3d,Cf_cfl3d,'b-',label="CFL3D")
 #plt.plot(x_fun3d,Cf_fun3d,'r-',label="FUN3D")
 
 # normalized velocity in x
+#u_cfl3d_097, y_cfl3d_097 = two_col_read("y_vs_u_cfl3d_0.970.dat",2)
+#u_cfl3d_190, y_cfl3d_190 = two_col_read("y_vs_u_cfl3d_1.903.dat",2)
 #plt.plot(u_cfl3d_097,y_cfl3d_097,'b-',label="CFL3D")
 #plt.plot(u_cfl3d_190,y_cfl3d_190,'b-',label="CFL3D")
 
 # the blasius solution for skin friction
-#plt.plot(abscissas, Cf_Blasius, 'b-', label="Blasius")
+#plt.plot(abscissas, Cf_Blasius, 'k-', label="Blasius")
 
 # the blasius solution for local Nusselt number
-#plt.plot(abscissas, Nu_x_Blasius, 'b-', label="Blasius")
+plt.plot(abscissas, Nu_x_Blasius, 'k-', label="Blasius")
 
 # plot the pohlhausen solution
-plt.plot(nondim_T_Pohl, eta_Pohl,'r-',label="Pohlhausen")
+#plt.plot(nondim_T_Pohl, eta_Pohl,'k-',label="Pohlhausen")
 
 # plot crocco-busemann profile
+#plt.hold(True)
+#plt.plot(nondim_T_CB, eta,'g-',label="Crocco-Busemann")
+
+
 plt.hold(True)
-plt.plot(nondim_T_CB, eta,'b-',label="Crocco-Busemann")
 
-
-
-plt.hold(True)
+##############################################################################
+# plot the contents of a two-column file
+if points_from_file == 'yes':
+    points_x, points_y = two_col_read(points_filename, header_lines)
+    plt.plot(points_x, points_y,points_marker,label=points_label)
+    plt.hold(True)
 ###############################################################################
 
 # generate plot
@@ -473,7 +503,7 @@ if altered_data == 'no':
   ordinates = values1
   if more_data == 'no':
     plt.hold(False)
-plt.plot(abscissas,ordinates,'k.-',label=data_label)
+plt.plot(abscissas,ordinates,'r.-',label=data_label)
 plt.xlabel('$'+abscissa_label+'$',fontsize=16)
 plt.ylabel('$'+ordinate_label+'$',fontsize=16)
 
